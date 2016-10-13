@@ -281,10 +281,13 @@ def run(module, result):
             result['updates'] = commands
 
         module.log('commands: %s' % commands)
-        load_config(module, commands, result)
+        if not module.params['audit']:
+            load_config(module, commands, result)
+        else:
+            result['changed'] = True
 
     if module.params['save']:
-        if not module.check_mode:
+        if not module.check_mode and not module.params['audit']:
             module.config.save_config()
         result['changed'] = True
 
@@ -310,6 +313,7 @@ def main():
         config=dict(),
         defaults=dict(type='bool', default=False),
 
+        audit=dict(type='bool', default=False),
         backup=dict(type='bool', default=False),
         save=dict(default=False, type='bool'),
     )
