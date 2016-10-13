@@ -111,6 +111,20 @@ options:
     required: false
     default: false
     choices: ['yes', 'no']
+  audit:
+    description:
+      - This argument will cause the module to run as usual and perform
+        all necessary analysis between the designed configuration and
+        the current running-config, however, it will prohibit the module
+        from sending any commands to the switch. It will still output
+        which commands would have been run, and will return changed=True
+        since a change would have occurred. This argument allows you to run
+        the playbook in normal mode (not --check) and still gather useful
+        audit information.
+    required: false
+    default: false
+    choices: ['yes', 'no']
+    version_added: "2.2"
   backup:
     description:
       - This argument will cause the module to create a full backup of
